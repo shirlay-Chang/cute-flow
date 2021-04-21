@@ -6,14 +6,39 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+      .loading{
+        width: 400px;
+        display: block;
+        margin:300px auto 0 auto;
+        animation: loading infinite 1s;
+      }
+      .loading img{
+        width: 100%;
+        height: 100%;
+      }
+      @keyframes loading {
+        from{
+          transform: rotateY(0deg);
+          opacity: 1;
+        }
+        to{
+          transform: rotateY(-50deg);
+          opacity: 0;
+        }
+      }
+    </style>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app">
-      正在努力加载页面，请耐心等候...
+      <div class="loading">
+        <img src="https://p4.ssl.qhimg.com/t01af7ea890f5e36234.png"/>
+      </div>
     </div>
     <!-- built files will be auto injected -->
+    <script src="https://unpkg.com/roughjs@latest/bundled/rough.js"></script>
   </body>
 </html>
