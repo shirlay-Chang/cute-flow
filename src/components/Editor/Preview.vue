@@ -19,37 +19,37 @@
 </template>
 
 <script>
-import { getStyle } from '@/utils/style'
-import { mapState } from 'vuex'
-import ComponentWrapper from './ComponentWrapper'
-import { changeStyleWithScale } from '@/utils/translate'
+import { getStyle } from '@/utils/style';
+import { mapState } from 'vuex';
+import ComponentWrapper from './ComponentWrapper';
+import { changeStyleWithScale } from '@/utils/translate';
 
 export default {
-    model: {
-        prop: 'show',
-        event: 'change',
+  model: {
+    prop: 'show',
+    event: 'change',
+  },
+  props: {
+    show: {
+      type: Boolean,
+      default: false,
     },
-    props: {
-        show: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    components: { ComponentWrapper },
-    computed: mapState([
-        'componentData',
-        'canvasStyleData',
-    ]),
-    methods: {
-        changeStyleWithScale,
+  },
+  components: { ComponentWrapper },
+  computed: mapState([
+    'componentData',
+    'canvasStyleData',
+  ]),
+  methods: {
+    changeStyleWithScale,
         
-        getStyle,
+    getStyle,
 
-        close() {
-            this.$emit('change', false)
-        },
+    close() {
+      this.$emit('change', false);
     },
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

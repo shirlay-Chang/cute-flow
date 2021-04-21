@@ -11,32 +11,32 @@
 </template>
 
 <script>
-import { getStyle } from '@/utils/style'
-import runAnimation from '@/utils/runAnimation'
-import { mixins } from '@/utils/events'
+import { getStyle } from '@/utils/style';
+import runAnimation from '@/utils/runAnimation';
+import { mixins } from '@/utils/events';
 
 export default {
-    props: {
-        config: {
-            type: Object,
-            require: true,
-        },
+  props: {
+    config: {
+      type: Object,
+      require: true,
     },
-    mounted() {
-        runAnimation(this.$el, this.config.animations)
-    },
-    mixins: [mixins],
-    methods: {
-        getStyle,
+  },
+  mounted() {
+    runAnimation(this.$el, this.config.animations);
+  },
+  mixins: [mixins],
+  methods: {
+    getStyle,
 
-        handleClick() {
-            const events = this.config.events
-            Object.keys(events).forEach(event => {
-                this[event](events[event])
-            })
-        },
+    handleClick() {
+      const events = this.config.events;
+      Object.keys(events).forEach(event => {
+        this[event](events[event]);
+      });
     },
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

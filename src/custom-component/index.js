@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from 'vue';
 
 const components = [
   'Picture',
@@ -7,8 +7,8 @@ const components = [
   'Group',
   'RectShape',
   'Diamond',
-]
+];
 
 components.forEach(key => {
-  Vue.component(key, () => import(`@/custom-component/${key}`))
-})
+  Vue.component(key, () => import(`@/custom-component/${key}`));
+});

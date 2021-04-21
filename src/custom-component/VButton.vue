@@ -4,13 +4,13 @@
 
 <script>
 export default {
-    props: {
-        propValue: {
-            type: String,
-            default: '',
-        },
+  props: {
+    propValue: {
+      type: String,
+      default: '',
     },
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

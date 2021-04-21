@@ -28,34 +28,34 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import Modal from '@/components/Modal'
-import { eventList } from '@/utils/events'
+import { mapState } from 'vuex';
+import Modal from '@/components/Modal';
+import { eventList } from '@/utils/events';
 
 export default {
-    components: { Modal },
-    data() {
-        return {
-            isShowEvent: false,
-            eventURL: '',
-            eventActiveName: 'redirect',
-            eventList,
-        }
+  components: { Modal },
+  data() {
+    return {
+      isShowEvent: false,
+      eventURL: '',
+      eventActiveName: 'redirect',
+      eventList,
+    };
+  },
+  computed: mapState([
+    'curComponent',
+  ]),
+  methods: {
+    addEvent(event, param) {
+      this.isShowEvent = false;
+      this.$store.commit('addEvent', { event, param });
     },
-    computed: mapState([
-        'curComponent',
-    ]),
-    methods: {
-        addEvent(event, param) {
-            this.isShowEvent = false
-            this.$store.commit('addEvent', { event, param })
-        },
 
-        removeEvent(event) {
-            this.$store.commit('removeEvent', event)
-        },
+    removeEvent(event) {
+      this.$store.commit('removeEvent', event);
     },
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

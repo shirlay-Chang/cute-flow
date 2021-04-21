@@ -1,12 +1,12 @@
 <template>
   <div class="diamond-shape">
     <v-text :propValue="element.propValue" :element="element" />
-    <canvas id="diamond-shape-canvas" width="200" height="200"></canvas>
+    <canvas class="diamond-canvas" @mousedown="hanldeMousedownOnCanvas" :id="canvasId" width="200" height="200"></canvas>
   </div>
 </template>
 
 <script>
-import rough from 'roughjs/bundled/rough.esm.js'
+import rough from 'roughjs/bundled/rough.esm.js';
 
 export default {
   name: 'Diamond',
@@ -15,19 +15,24 @@ export default {
       type: Object,
     },
   },
+  data() {
+    return {
+      canvasId: 'diamond-canvas'+new Date().getTime(),
+    };
+  },
   watch: {
     element(val) {
-      console.log(val)
+      console.log(val);
     },
   },
   mounted() {
     setTimeout(() => {
-      this.draw()
-    }, 0)
+      this.draw();
+    }, 0);
   },
   methods: {
     draw() {
-      let rc = rough.canvas(document.getElementById('diamond-shape-canvas'))
+      let rc = rough.canvas(document.getElementById(this.canvasId));
       rc.polygon(
         [
           [100, 2],
@@ -41,10 +46,12 @@ export default {
           // fill: 'rgba(0,0,255,0.2)',
           // fillStyle: 'solid'
         },
-      )
+      );
+    },
+    hanldeMousedownOnCanvas() {
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -57,10 +64,11 @@ export default {
     position: absolute;
     z-index: 1;
   }
-  #diamond-shape-canvas {
+  .diamond-canvas {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: -1;
   }
 }
 </style>

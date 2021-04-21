@@ -9,18 +9,18 @@
 
 <script>
 export default {
-    props: {
-        start: {
-            type: Object,
-        },
-        width: {
-            type: Number,
-        },
-        height: {
-            type: Number,
-        },
+  props: {
+    start: {
+      type: Object,
     },
-}
+    width: {
+      type: Number,
+    },
+    height: {
+      type: Number,
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

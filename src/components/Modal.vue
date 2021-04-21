@@ -8,26 +8,26 @@
 
 <script>
 export default {
-    model: {
-        prop: 'show',
-        event: 'change',
+  model: {
+    prop: 'show',
+    event: 'change',
+  },
+  props: {
+    show: {
+      type: Boolean,
+      default: false,
     },
-    props: {
-        show: {
-            type: Boolean,
-            default: false,
-        },
+  },
+  methods: {
+    hide() {
+      this.$emit('change');
     },
-    methods: {
-        hide() {
-            this.$emit('change')
-        },
 
-        stopPropagation(e) {
-            e.stopPropagation()
-        },
+    stopPropagation(e) {
+      e.stopPropagation();
     },
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

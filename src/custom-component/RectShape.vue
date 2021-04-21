@@ -6,12 +6,12 @@
 
 <script>
 export default {
-    props: {
-        element: {
-            type: Object,
-        },
+  props: {
+    element: {
+      type: Object,
     },
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

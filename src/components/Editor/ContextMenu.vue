@@ -21,73 +21,73 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
 export default {
-    data() {
-        return {
-            copyData: null,
-        }
+  data() {
+    return {
+      copyData: null,
+    };
+  },
+  computed: mapState([
+    'menuTop',
+    'menuLeft',
+    'menuShow',
+    'curComponent',
+  ]),
+  methods: {
+    lock() {
+      this.$store.commit('lock');
     },
-    computed: mapState([
-        'menuTop',
-        'menuLeft',
-        'menuShow',
-        'curComponent',
-    ]),
-    methods: {
-        lock() {
-            this.$store.commit('lock')
-        },
 
-        unlock() {
-            this.$store.commit('unlock')
-        },
-
-        // 点击菜单时不取消当前组件的选中状态
-        handleMouseUp() {
-            this.$store.commit('setClickComponentStatus', true)
-        },
-
-        cut() {
-            this.$store.commit('cut')
-        },
-
-        copy() {
-            this.$store.commit('copy')
-        },
-
-        paste() {
-            this.$store.commit('paste', true)
-            this.$store.commit('recordSnapshot')
-        },
-
-        deleteComponent() {
-            this.$store.commit('deleteComponent')
-            this.$store.commit('recordSnapshot')
-        },
-
-        upComponent() {
-            this.$store.commit('upComponent')
-            this.$store.commit('recordSnapshot')
-        },
-
-        downComponent() {
-            this.$store.commit('downComponent')
-            this.$store.commit('recordSnapshot')
-        },
-
-        topComponent() {
-            this.$store.commit('topComponent')
-            this.$store.commit('recordSnapshot')
-        },
-
-        bottomComponent() {
-            this.$store.commit('bottomComponent')
-            this.$store.commit('recordSnapshot')
-        },
+    unlock() {
+      this.$store.commit('unlock');
     },
-}
+
+    // 点击菜单时不取消当前组件的选中状态
+    handleMouseUp() {
+      this.$store.commit('setClickComponentStatus', true);
+    },
+
+    cut() {
+      this.$store.commit('cut');
+    },
+
+    copy() {
+      this.$store.commit('copy');
+    },
+
+    paste() {
+      this.$store.commit('paste', true);
+      this.$store.commit('recordSnapshot');
+    },
+
+    deleteComponent() {
+      this.$store.commit('deleteComponent');
+      this.$store.commit('recordSnapshot');
+    },
+
+    upComponent() {
+      this.$store.commit('upComponent');
+      this.$store.commit('recordSnapshot');
+    },
+
+    downComponent() {
+      this.$store.commit('downComponent');
+      this.$store.commit('recordSnapshot');
+    },
+
+    topComponent() {
+      this.$store.commit('topComponent');
+      this.$store.commit('recordSnapshot');
+    },
+
+    bottomComponent() {
+      this.$store.commit('bottomComponent');
+      this.$store.commit('recordSnapshot');
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

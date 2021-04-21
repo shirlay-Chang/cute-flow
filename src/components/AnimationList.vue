@@ -39,40 +39,40 @@
 </template>
 
 <script>
-import Modal from '@/components/Modal'
-import eventBus from '@/utils/eventBus'
-import animationClassData from '@/utils/animationClassData'
-import { mapState } from 'vuex'
+import Modal from '@/components/Modal';
+import eventBus from '@/utils/eventBus';
+import animationClassData from '@/utils/animationClassData';
+import { mapState } from 'vuex';
 
 export default {
-    components: { Modal },
-    data() {
-        return {
-            isShowAnimation: false,
-            hoverPreviewAnimate: '',
-            animationActiveName: '进入',
-            animationClassData,
-            showAnimatePanel: false,
-        }
+  components: { Modal },
+  data() {
+    return {
+      isShowAnimation: false,
+      hoverPreviewAnimate: '',
+      animationActiveName: '进入',
+      animationClassData,
+      showAnimatePanel: false,
+    };
+  },
+  computed: mapState([
+    'curComponent',
+  ]),
+  methods: {
+    addAnimation(animate) {
+      this.$store.commit('addAnimation', animate);
+      this.isShowAnimation = false;
     },
-    computed: mapState([
-        'curComponent',
-    ]),
-    methods: {
-        addAnimation(animate) {
-            this.$store.commit('addAnimation', animate)
-            this.isShowAnimation = false
-        },
 
-        previewAnimate() {
-            eventBus.$emit('runAnimation')
-        },
-
-        removeAnimation(index) {
-            this.$store.commit('removeAnimation', index)
-        },
+    previewAnimate() {
+      eventBus.$emit('runAnimation');
     },
-}
+
+    removeAnimation(index) {
+      this.$store.commit('removeAnimation', index);
+    },
+  },
+};
 </script>
 
 <style lang="scss">

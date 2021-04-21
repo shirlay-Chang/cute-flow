@@ -9,20 +9,20 @@
 </template>
 
 <script>
-import componentList from '@/custom-component/component-list'
+import componentList from '@/custom-component/component-list';
 
 export default {
-    data() {
-        return {
-            componentList,
-        }
+  data() {
+    return {
+      componentList,
+    };
+  },
+  methods: {
+    handleDragStart(e) {
+      e.dataTransfer.setData('index', e.target.dataset.index);
     },
-    methods: {
-        handleDragStart(e) {
-            e.dataTransfer.setData('index', e.target.dataset.index)
-        },
-    },
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
