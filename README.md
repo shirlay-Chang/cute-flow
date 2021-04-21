@@ -1,3 +1,4 @@
-# Cute Flow
+# cute-flow
 
-A cute flow chart tool by vue3 and typescript.
+A cute flow chart tool.
+website: *******

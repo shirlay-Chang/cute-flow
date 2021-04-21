@@ -1,52 +1,65 @@
 module.exports = {
-  env: {
-    browser: true,
-    es6: true,
-    node: true,
-  },
-
-  // the ts-eslint recommended ruleset sets the parser so we need to set it back
-  parser: 'vue-eslint-parser',
-
-  parserOptions: {
-    ecmaVersion: 2020,
-    parser: '@typescript-eslint/parser',
-    extraFileExtensions: ['.vue'],
-    ecmaFeatures: {
-      jsx: true,
+    root: true,
+    env: {
+        node: true,
     },
-    sourceType: 'module',
-  },
-
-  extends: [
-    'plugin:vue/vue3-essential',
-    'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-    'prettier/vue',
-    'prettier/@typescript-eslint',
-  ],
-
-  plugins: ['vue', '@typescript-eslint'],
-
-  rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-
-    // this rule, if on, would require explicit return type on the `render` function
-    '@typescript-eslint/explicit-function-return-type': 'off',
-
-    // conflict with Prettier
-    // 'vue/html-indent': 'off',
-  },
-
-  overrides: [
-    {
-      files: ['*.js'],
-      rules: {
-        '@typescript-eslint/no-var-requires': 'off',
-      },
+    extends: [
+        'plugin:vue/essential',
+        '@vue/airbnb',
+    ],
+    parserOptions: {
+        ecmaFeatures: {
+            legacyDecorators: true
+        },
+        parser: 'babel-eslint',
     },
-  ],
-}
+    rules: {
+        'no-console': 'off',
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        'array-element-newline': ['error', 'consistent'],
+        'indent': ['error', 4, { 'MemberExpression': 0, 'SwitchCase': 1, 'ignoredNodes': ['TemplateLiteral'] }],
+        'quotes': ['error', 'single'],
+        'comma-dangle': ['error', 'always-multiline'],
+        'semi': ['error', 'never'],
+        'object-curly-spacing': ['error', 'always'],
+        'max-len': ['error', 140],
+        'no-new': 'off',
+        'linebreak-style': 'off',
+        'import/extensions': 'off',
+        'eol-last': 'off',
+        'no-shadow': 'off',
+        'no-unused-vars': 'warn',
+        'import/no-cycle': 'off',
+        'arrow-parens': 'off',
+        'eqeqeq': 'off',
+        'no-param-reassign': 'off',
+        'import/prefer-default-export': 'off',
+        'no-use-before-define': 'off',
+        'no-continue': 'off',
+        'prefer-destructuring': 'off',
+        'no-plusplus': 'off',
+        'prefer-const': 'off',
+        'global-require': 'off',
+        'no-prototype-builtins': 'off',
+        'consistent-return': 'off',
+        'vue/require-component-is': 'off',
+        'prefer-template': 'off',
+        'one-var-declaration-per-line': 'off',
+        'one-var': 'off',
+        'import/named': 'off',
+        'object-curly-newline': 'off',
+        'default-case': 'off',
+        'space-infix-ops': 'off',
+        'import/order': 'off',
+        'no-trailing-spaces': 'off',
+        'func-names': 'off',
+        'radix': 'off',
+        'no-unused-expressions': 'off',
+        'no-underscore-dangle': 'off',
+        'no-nested-ternary': 'off',
+        'no-restricted-syntax': 'off',
+        'no-mixed-operators': 'off',
+        'no-await-in-loop': 'off',
+        'template-curly-spacing' : 'off',
+    },
+};
