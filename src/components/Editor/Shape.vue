@@ -208,8 +208,9 @@ export default {
     handleMouseDownOnShape(e) {
       this.$store.commit('setClickComponentStatus', true);
       if (
-        this.element.component != 'v-text'
-        && this.element.component != 'rect-shape'
+        !this.element.component.canEdit
+        // this.element.component != 'v-text'
+        // && this.element.component != 'rect-shape'
       ) {
         e.preventDefault();
       }
@@ -308,6 +309,7 @@ export default {
 
       const needLockProportion = this.isNeedLockProportion();
       const move = (moveEvent) => {
+        this.$slots.default[0].componentInstance.update();
         // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
         // 因此第一次点击时不触发 move 事件
         if (isFirst) {

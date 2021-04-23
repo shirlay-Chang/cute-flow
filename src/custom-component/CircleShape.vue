@@ -1,8 +1,8 @@
 <template>
-  <div class="diamond-shape">
+  <div class="circle-shape">
     <v-text :propValue="element.propValue" :element="element" />
     <svg 
-    class="diamond-svg" 
+    class="circle-svg" 
     :style="svgStyle"
     :id="svgId" 
     width="200" 
@@ -14,7 +14,7 @@
 import rough from 'roughjs/bundled/rough.esm.js';
 
 export default {
-  name: 'Diamond',
+  name: 'circle-shape',
   props: {
     element: {
       type: Object,
@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      svgId: 'diamond-svg'+new Date().getTime(),
+      svgId: 'circle-svg'+new Date().getTime(),
       wrapperWidth: 200,
       wrapperHeight: 200,
     };
@@ -49,29 +49,27 @@ export default {
     draw() {
       const svg = document.getElementById(this.svgId);
       const rc = rough.svg(svg);
-      svg.appendChild(rc.polygon(
-        [
-          [100, 2],
-          [198, 100],
-          [100, 198],
-          [2, 100],
-        ],
+      svg.appendChild(rc.circle(
+        100, 100, 190,
         {
-          ...this.element.svgStyle,
+          stroke: 'black',
+          strokeWidth: 1,
+          // fill: 'rgba(0,0,255,0.2)',
+          // fillStyle: 'solid'
         },
       ));
     },
     update() {
-      const diamond = document.getElementsByClassName('diamond-shape')[0];
-      this.wrapperWidth = diamond.clientWidth;
-      this.wrapperHeight = diamond.clientHeight;
+      const circle = document.getElementsByClassName('circle-shape')[0];
+      this.wrapperWidth = circle.clientWidth;
+      this.wrapperHeight = circle.clientHeight;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.diamond-shape {
+.circle-shape {
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -80,7 +78,7 @@ export default {
     position: absolute;
     z-index: 1;
   }
-  .diamond-svg {
+  .circle-svg {
     position: absolute;
     top: 0;
     left: 0;

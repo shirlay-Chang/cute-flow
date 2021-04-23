@@ -7,6 +7,7 @@ const components = [
   'Group',
   'RectShape',
   'Diamond',
+  'CircleShape',
 ];
 
 components.forEach(key => {

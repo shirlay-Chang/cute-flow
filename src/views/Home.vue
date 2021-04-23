@@ -16,7 +16,12 @@
             </section>
             <!-- 右侧属性列表 -->
             <section class="right">
-                <el-tabs v-model="activeName">
+              <AttrList v-if="curComponent" />
+              <div v-else class="placeholder">
+                <p>ღ( ´･ᴗ･` )</p>
+                <p>点击组件就能编辑哦~</p>
+              </div>
+                <!-- <el-tabs v-model="activeName">
                     <el-tab-pane label="属性" name="attr">
                         <AttrList v-if="curComponent" />
                         <p v-else class="placeholder">请选择组件</p>
@@ -29,7 +34,7 @@
                         <EventList v-if="curComponent" />
                         <p v-else class="placeholder">请选择组件</p>
                     </el-tab-pane>
-                </el-tabs>
+                </el-tabs> -->
             </section>
         </main>
     </div>
@@ -39,8 +44,8 @@
 import Editor from '@/components/Editor/index';
 import ComponentList from '@/components/ComponentList'; // 左侧列表组件
 import AttrList from '@/components/AttrList'; // 右侧属性列表
-import AnimationList from '@/components/AnimationList'; // 右侧动画列表
-import EventList from '@/components/EventList'; // 右侧事件列表
+// import AnimationList from '@/components/AnimationList'; // 右侧动画列表
+// import EventList from '@/components/EventList'; // 右侧事件列表
 import componentList from '@/custom-component/component-list'; // 左侧列表数据
 import Toolbar from '@/components/Toolbar';
 import { deepCopy } from '@/utils/utils';
@@ -49,7 +54,7 @@ import generateID from '@/utils/generateID';
 import { listenGlobalKeyDown } from '@/utils/shortcutKey';
 
 export default {
-  components: { Editor, ComponentList, AttrList, AnimationList, EventList, Toolbar },
+  components: { Editor, ComponentList, AttrList, Toolbar },
   data() {
     return {
       activeName: 'attr',
@@ -164,8 +169,12 @@ export default {
     }
 
     .placeholder {
-        text-align: center;
-        color: #333;
+      text-align: center;
+      color: #333;
+      padding-top: 20px;
+      p{
+        margin-bottom:20px;
+      }
     }
 }
 </style>

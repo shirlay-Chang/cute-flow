@@ -1,34 +1,50 @@
 <template>
-    <div>
-        <div class="toolbar">
-            <el-button @click="undo">撤消</el-button>
-            <el-button @click="redo">重做</el-button>
-            <label for="input" class="insert">插入图片</label>
-            <input type="file" @change="handleFileChange" id="input" hidden />
-            <el-button @click="preview" style="margin-left: 10px;">预览</el-button>
-            <el-button @click="save">保存</el-button>
-            <el-button @click="clearCanvas">清空画布</el-button>
-            <el-button @click="compose" :disabled="!areaData.components.length">组合</el-button>
-            <el-button @click="decompose" 
-            :disabled="!curComponent || curComponent.isLock || curComponent.component != 'Group'">拆分</el-button>
-            
-            <el-button @click="lock" :disabled="!curComponent || curComponent.isLock">锁定</el-button>
-            <el-button @click="unlock" :disabled="!curComponent || !curComponent.isLock">解锁</el-button>
-            <div class="canvas-config">
-                <span>画布大小</span>
-                <input v-model="canvasStyleData.width">
-                <span>*</span>
-                <input v-model="canvasStyleData.height">
-            </div>
-            <div class="canvas-config">
-                <span>画布比例</span>
-                <input v-model="scale" @input="handleScaleChange"> %
-            </div>
-        </div>
+  <div>
+    <img class="logo" src="https://p4.ssl.qhimg.com/t01af7ea890f5e36234.png"/>
+    <div class="toolbar">
+      <el-button @click="undo">撤消</el-button>
+      <el-button @click="redo">重做</el-button>
+      <label for="input" class="insert">插入图片</label>
+      <input type="file" @change="handleFileChange" id="input" hidden />
+      <el-button @click="preview" style="margin-left: 10px">预览</el-button>
+      <el-button @click="save">保存</el-button>
+      <el-button @click="clearCanvas">清空画布</el-button>
+      <el-button @click="compose" :disabled="!areaData.components.length"
+        >组合</el-button
+      >
+      <el-button
+        @click="decompose"
+        :disabled="
+          !curComponent ||
+          curComponent.isLock ||
+          curComponent.component != 'Group'
+        "
+        >拆分</el-button
+      >
 
-        <!-- 预览 -->
-        <Preview v-model="isShowPreview" @change="handlePreviewChange" />
+      <el-button @click="lock" :disabled="!curComponent || curComponent.isLock"
+        >锁定</el-button
+      >
+      <el-button
+        @click="unlock"
+        :disabled="!curComponent || !curComponent.isLock"
+        >解锁</el-button
+      >
+      <div class="canvas-config">
+        <span>画布大小</span>
+        <input v-model="canvasStyleData.width" />
+        <span>*</span>
+        <input v-model="canvasStyleData.height" />
+      </div>
+      <div class="canvas-config">
+        <span>画布比例</span>
+        <input v-model="scale" @input="handleScaleChange" /> %
+      </div>
     </div>
+
+    <!-- 预览 -->
+    <Preview v-model="isShowPreview" @change="handlePreviewChange" />
+  </div>
 </template>
 
 <script>
@@ -73,7 +89,7 @@ export default {
   methods: {
     format(value) {
       const scale = this.scale;
-      return value * parseInt(scale) / 100;
+      return (value * parseInt(scale)) / 100;
     },
 
     getOriginStyle(value) {
@@ -86,12 +102,14 @@ export default {
       clearTimeout(this.timer);
       setTimeout(() => {
         const componentData = deepCopy(this.componentData);
-        componentData.forEach(component => {
-          Object.keys(component.style).forEach(key => {
+        componentData.forEach((component) => {
+          Object.keys(component.style).forEach((key) => {
             if (this.needToChange.includes(key)) {
               // 根据原来的比例获取样式原来的尺寸
               // 再用原来的尺寸 * 现在的比例得出新的尺寸
-              component.style[key] = this.format(this.getOriginStyle(component.style[key]));
+              component.style[key] = this.format(
+                this.getOriginStyle(component.style[key]),
+              );
             }
           });
         });
@@ -121,7 +139,7 @@ export default {
       this.$store.commit('decompose');
       this.$store.commit('recordSnapshot');
     },
-        
+
     undo() {
       this.$store.commit('undo');
     },
@@ -146,8 +164,8 @@ export default {
             component: {
               ...commonAttr,
               id: generateID(),
-              component: 'Picture', 
-              label: '图片', 
+              component: 'Picture',
+              label: '图片',
               icon: '',
               propValue: fileResult,
               style: {
@@ -193,62 +211,97 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.logo{
+  position: absolute;
+  left:20px;
+  top:15px;
+  width: 100px;
+}
 .toolbar {
-    height: 64px;
-    line-height: 64px;
-    background: #fff;
-    border-bottom: 1px solid #ddd;
+  height: 64px;
+  line-height: 64px;
+  // background: rgba(153, 144, 235, 0.1);
+  border-bottom: 1px solid #ddd;
+  padding-left: 200px;
 
-    .canvas-config {
-        display: inline-block;
-        margin-left: 10px;
-        font-size: 14px;
-        color: #606266;
-
-        input {
-            width: 50px;
-            margin-left: 10px;
-            outline: none;
-            padding: 0 5px;
-            border: 1px solid #ddd;
-            color: #606266;
-        }
-
-        span {
-            margin-left: 10px;
-        }
+  button {
+    background: rgb(112, 192, 255);
+    color: #ffffff;
+    &:active {
+      border-color: rgb(82, 163, 224);
+      outline: 0;
     }
 
-    .insert {
-        display: inline-block;
-        line-height: 1;
-        white-space: nowrap;
-        cursor: pointer;
-        background: #FFF;
-        border: 1px solid #DCDFE6;
-        color: #606266;
-        -webkit-appearance: none;
-        text-align: center;
-        box-sizing: border-box;
-        outline: 0;
-        margin: 0;
-        transition: .1s;
-        font-weight: 500;
-        padding: 9px 15px;
-        font-size: 12px;
-        border-radius: 3px;
-        margin-left: 10px;
-
-        &:active {
-            color: #3a8ee6;
-            border-color: #3a8ee6;
-            outline: 0;
-        }
-
-        &:hover {
-            background-color: #ecf5ff;
-            color: #3a8ee6;
-        }
+    &:hover {
+      background-color: rgba(112, 192, 255, 0.8);
     }
+  }
+
+  .is-disabled{
+    color: #ffffff;
+    background-color: rgb(187, 223, 250);
+
+    &:active {
+      border-color: rgb(187, 223, 250);
+      outline: 0;
+    }
+
+    &:hover {
+      background-color: rgb(187, 223, 250);
+    }
+  }
+
+  .canvas-config {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #606266;
+
+    input {
+      width: 56px;
+      text-align: center;
+      height: 32px;
+      line-height: 32px;
+      margin-left: 10px;
+      outline: none;
+      padding: 0 5px;
+      border: 1px solid #ddd;
+      color: #606266;
+    }
+
+    span {
+      margin-left: 10px;
+    }
+  }
+
+  .insert {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #dcdfe6;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    transition: 0.1s;
+    font-weight: 500;
+    padding: 9px 15px;
+    font-size: 12px;
+    border-radius: 3px;
+    margin-left: 10px;
+    background: rgb(112, 192, 255);
+    color: #ffffff;
+
+    &:active {
+      border-color: rgb(82, 163, 224);
+      outline: 0;
+    }
+
+    &:hover {
+      background-color: rgba(112, 192, 255, 0.8);
+    }
+  }
 }
 </style>
