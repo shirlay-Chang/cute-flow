@@ -1,5 +1,5 @@
 <template>
-  <div class="diamond-shape">
+  <div :class="'diamond-shape '+diamondClass">
     <v-text :propValue="element.propValue" :element="element" />
     <svg 
     class="diamond-svg" 
@@ -22,6 +22,7 @@ export default {
   },
   data() {
     return {
+      diamondClass: 'diamond-shape'+new Date().getTime(),
       svgId: 'diamond-svg'+new Date().getTime(),
       wrapperWidth: 200,
       wrapperHeight: 200,
@@ -34,10 +35,13 @@ export default {
         transformOrigin: 'left top',
       };
     },
+    curComponent() {
+      return this.$store.state.curComponent;
+    },
   },
   watch: {
-    element(val) {
-      console.log(val);
+    curComponent() {
+      this.update();
     },
   },
   mounted() {
@@ -62,7 +66,7 @@ export default {
       ));
     },
     update() {
-      const diamond = document.getElementsByClassName('diamond-shape')[0];
+      const diamond = document.getElementsByClassName(this.diamondClass)[0];
       this.wrapperWidth = diamond.clientWidth;
       this.wrapperHeight = diamond.clientHeight;
     },

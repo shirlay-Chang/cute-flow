@@ -106,7 +106,6 @@ export default {
     changeStyleWithScale,
 
     handleMouseDown(e) {
-      console.log(this.curComponent);
       // 如果没有选中组件 在画布上点击时需要调用 e.preventDefault() 防止触发 drop 事件
       if (
         !this.curComponent

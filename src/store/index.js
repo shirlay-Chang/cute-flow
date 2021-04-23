@@ -62,12 +62,29 @@ const data = {
       state.curComponentIndex = index;
     },
         
-    setShapeStyle({ curComponent }, { top, left, width, height, rotate }) {
-      if (top) curComponent.style.top = top;
-      if (left) curComponent.style.left = left;
-      if (width) curComponent.style.width = width;
-      if (height) curComponent.style.height = height;
-      if (rotate) curComponent.style.rotate = rotate;
+    setShapeStyle(state, { top, left, width, height, rotate }) {
+      const newComponent = {
+        ...state.curComponent,
+        style: {
+          ...state.curComponent.style,
+        },
+      };
+      if (top) newComponent.style.top = top;
+      if (left) newComponent.style.left = left;
+      if (width) newComponent.style.width = width;
+      if (height) newComponent.style.height = height;
+      if (rotate) newComponent.style.rotate = rotate;
+
+      state.curComponent = newComponent;
+      state.componentData[state.curComponentIndex] = newComponent;
+    },
+
+    setComponentStyle({ curComponent }, { key, value }) {
+      curComponent.style[key] = value;
+    },
+
+    setComponentSvgStyle({ curComponent }, { key, value }) {
+      curComponent.svgStyle[key] = value;
     },
 
     setShapeSingleStyle({ curComponent }, { key, value }) {
@@ -75,7 +92,9 @@ const data = {
     },
 
     setComponentData(state, componentData = []) {
-      Vue.set(state, 'componentData', componentData);
+      state.componentData = [...componentData];
+      state.curComponent = componentData[state.curComponentIndex];
+      // Vue.set(state, 'componentData', componentData);
     },
 
     addComponent(state, { component, index }) {

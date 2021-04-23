@@ -1,25 +1,44 @@
 <template>
-    <div class="attr-list">
-        <el-form>
-            <el-form-item v-for="(key, index) in styleKeys.filter(item => item != 'rotate')" :key="index" :label="map[key]">
-                <el-color-picker v-if="key == 'borderColor'" v-model="curComponent.style[key]"></el-color-picker>
-                <el-color-picker v-else-if="key == 'color'" v-model="curComponent.style[key]"></el-color-picker>
-                <el-color-picker v-else-if="key == 'backgroundColor'" v-model="curComponent.style[key]"></el-color-picker>
-                <el-select v-else-if="key == 'textAlign'" v-model="curComponent.style[key]">
-                    <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                    ></el-option>
-                </el-select>
-                <el-input type="number" v-else v-model="curComponent.style[key]" />
-            </el-form-item>
-            <el-form-item label="内容" v-if="curComponent && !excludes.includes(curComponent.component)">
-                <el-input type="textarea" v-model="curComponent.propValue" />
-            </el-form-item>
-        </el-form>
-    </div>
+  <div class="attr-list">
+    <el-form>
+      <el-form-item
+        v-for="(key, index) in styleKeys.filter((item) => item != 'rotate')"
+        :key="index"
+        :label="map[key]"
+      >
+        <el-color-picker
+          v-if="key == 'borderColor'"
+          v-model="editComponent.style[key]"
+        ></el-color-picker>
+        <el-color-picker
+          v-else-if="key == 'color'"
+          v-model="editComponent.style[key]"
+        ></el-color-picker>
+        <el-color-picker
+          v-else-if="key == 'backgroundColor'"
+          v-model="editComponent.style[key]"
+        ></el-color-picker>
+        <el-select
+          v-else-if="key == 'textAlign'"
+          v-model="editComponent.style[key]"
+        >
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+        <el-input type="number" v-else v-model="editComponent.style[key]" />
+      </el-form-item>
+      <el-form-item
+        label="内容"
+        v-if="editComponent && !excludes.includes(editComponent.component)"
+      >
+        <el-input type="textarea" v-model="editComponent.propValue" />
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
@@ -58,14 +77,29 @@ export default {
         textAlign: '对齐方式',
         opacity: '透明度',
       },
+      editComponent: { style: {} },
     };
   },
   computed: {
     styleKeys() {
-      return this.$store.state.curComponent? Object.keys(this.$store.state.curComponent.style) : [];
+      return this.$store.state.curComponent
+        ? Object.keys(this.$store.state.curComponent.style)
+        : [];
     },
     curComponent() {
       return this.$store.state.curComponent;
+    },
+  },
+  watch: {
+    curComponent(val) {
+      if (val) {
+        this.editComponent = val;
+      }
+    },
+    editComponent(val) {
+      this.$store.commit('setCurComponent', {
+        ...val,
+      });
     },
   },
 };
@@ -73,9 +107,9 @@ export default {
 
 <style lang="scss" scoped>
 .attr-list {
-    overflow: auto;
-    padding: 20px;
-    padding-top: 0;
-    height: 100%;
+  overflow: auto;
+  padding: 20px;
+  padding-top: 0;
+  height: 100%;
 }
 </style>
