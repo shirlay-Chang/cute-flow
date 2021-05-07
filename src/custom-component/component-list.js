@@ -109,7 +109,6 @@ const list = [
     svgStyle: {
       roughness: 1,
       bowing: 1,
-      seed: 0,
       stroke: '#000',
       strokeWidth: 1,
       fill: '#bbdffa',
@@ -144,7 +143,6 @@ const list = [
     svgStyle: {
       roughness: 1,
       bowing: 1,
-      seed: 0,
       stroke: '#000',
       strokeWidth: 1,
       fill: '#bbdffa',

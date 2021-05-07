@@ -21,6 +21,11 @@
           v-model="editComponent.style[key]"
           @change="changeAttr($event,'style',key)"
         ></el-color-picker>
+        <el-slider
+          v-else-if="key == 'roughness'"
+          v-model="editComponent.svgStyle[key]"
+          @change="changeAttr($event,'style',key)"
+        ></el-slider>
         <el-select
           v-else-if="key == 'textAlign'"
           v-model="editComponent.style[key]"
@@ -91,6 +96,17 @@ export default {
         letterSpacing: '字间距',
         textAlign: '对齐方式',
         opacity: '透明度',
+        roughness: '粗糙度',
+        bowing: '线条弯曲',
+        stroke: '边框线条颜色',
+        strokeWidth: '边框线条宽度',
+        fill: '填充线条颜色',
+        fillWeight: '填充线条宽度',
+        fillStyle: '填充线条样式',
+        hachureAngle: '填充线条角度',
+        hachureGap: '填充线条间距',
+        curveStepCount: '曲线程度',
+        curveFitting: '曲线拟合',
       },
       editComponent: {
         style: {
@@ -109,7 +125,6 @@ export default {
         svgStyle: {
           roughness: 1,
           bowing: 1,
-          seed: 0,
           stroke: '#000',
           strokeWidth: 1,
           fill: '#bbdffa',
@@ -126,7 +141,7 @@ export default {
   computed: {
     styleKeys() {
       return this.$store.state.curComponent
-        ? Object.keys(this.$store.state.curComponent.style)
+        ? Object.keys(this.$store.state.curComponent.style).concat(Object.keys(this.$store.state.curComponent.svgStyle))
         : [];
     },
     curComponent() {

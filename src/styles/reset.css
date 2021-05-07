@@ -44,3 +44,6 @@ li {
 .el-tabs__nav-scroll {
     padding-left: 20px;
 }
+.el-form-item__label{
+  float: none;
+}
