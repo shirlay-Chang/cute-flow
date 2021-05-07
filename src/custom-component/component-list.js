@@ -28,6 +28,7 @@ const list = [
       letterSpacing: 0,
       textAlign: '',
       color: '',
+      opacity: 1,
     },
   },
   {
@@ -48,6 +49,7 @@ const list = [
       textAlign: '',
       color: '',
       backgroundColor: '',
+      opacity: 1,
     },
   },
   {
@@ -59,6 +61,7 @@ const list = [
       width: 300,
       height: 200,
       borderRadius: '',
+      opacity: 1,
     },
   },
   {
@@ -81,6 +84,7 @@ const list = [
       backgroundColor: '',
       borderStyle: 'solid',
       verticalAlign: 'middle',
+      opacity: 1,
     },
   },
   {
@@ -100,6 +104,7 @@ const list = [
       color: '',
       backgroundColor: '',
       verticalAlign: 'middle',
+      opacity: 1,
     },
     svgStyle: {
       roughness: 1,
@@ -134,6 +139,7 @@ const list = [
       color: '',
       backgroundColor: '',
       verticalAlign: 'middle',
+      opacity: 1,
     },
     svgStyle: {
       roughness: 1,

@@ -216,6 +216,7 @@ export default {
       }
 
       e.stopPropagation();
+
       this.$store.commit('setCurComponent', {
         component: this.element,
         index: this.index,

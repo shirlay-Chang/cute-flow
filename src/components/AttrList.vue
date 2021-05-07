@@ -9,18 +9,22 @@
         <el-color-picker
           v-if="key == 'borderColor'"
           v-model="editComponent.style[key]"
+          @change="changeAttr($event,'style',key)"
         ></el-color-picker>
         <el-color-picker
           v-else-if="key == 'color'"
           v-model="editComponent.style[key]"
+          @change="changeAttr($event,'style',key)"
         ></el-color-picker>
         <el-color-picker
           v-else-if="key == 'backgroundColor'"
           v-model="editComponent.style[key]"
+          @change="changeAttr($event,'style',key)"
         ></el-color-picker>
         <el-select
           v-else-if="key == 'textAlign'"
           v-model="editComponent.style[key]"
+          @change="changeAttr($event,'style',key)"
         >
           <el-option
             v-for="item in options"
@@ -29,19 +33,30 @@
             :value="item.value"
           ></el-option>
         </el-select>
-        <el-input type="number" v-else v-model="editComponent.style[key]" />
+        <el-input 
+        type="number" 
+        @input="changeAttr($event,'style',key)" 
+        :step="key == 'opacity' ? 0.1 : 1"
+        :max="key == 'opacity' ? 1 : 800"
+        v-else 
+        v-model="editComponent.style[key]" />
       </el-form-item>
       <el-form-item
         label="内容"
         v-if="editComponent && !excludes.includes(editComponent.component)"
       >
-        <el-input type="textarea" v-model="editComponent.propValue" />
+        <el-input 
+        type="textarea" 
+        @input="changeAttr($event,'propValue')" 
+        v-model="editComponent.propValue" />
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import { deepCopy } from '@/utils/utils';
+
 export default {
   data() {
     return {
@@ -77,7 +92,35 @@ export default {
         textAlign: '对齐方式',
         opacity: '透明度',
       },
-      editComponent: { style: {} },
+      editComponent: {
+        style: {
+          opacity: 1,
+          width: 200,
+          height: 200,
+          fontSize: 14,
+          fontWeight: 500,
+          lineHeight: '',
+          letterSpacing: 0,
+          textAlign: 'center',
+          color: '',
+          backgroundColor: '',
+          verticalAlign: 'middle',
+        },
+        svgStyle: {
+          roughness: 1,
+          bowing: 1,
+          seed: 0,
+          stroke: '#000',
+          strokeWidth: 1,
+          fill: '#bbdffa',
+          fillStyle: 'hachure',
+          fillWeight: '1',
+          hachureAngle: 60, 
+          hachureGap: 4,
+          curveStepCount: 9,
+          curveFitting: 0.95,
+        },
+      },
     };
   },
   computed: {
@@ -89,6 +132,12 @@ export default {
     curComponent() {
       return this.$store.state.curComponent;
     },
+    curComponentIndex() {
+      return this.$store.state.curComponentIndex;
+    },
+    componentData() {
+      return this.$store.state.componentData;
+    },
   },
   watch: {
     curComponent(val) {
@@ -96,10 +145,27 @@ export default {
         this.editComponent = val;
       }
     },
-    editComponent(val) {
+  },
+  mounted() {
+    this.editComponent = this.curComponent;
+  },
+  methods: {
+    changeAttr(value, prop, key) {
+      const newCurComponent = {
+        ...this.curComponent,
+        [prop]: key ? { 
+          ...this.curComponent[prop],
+          [key]: value,
+        } : value,
+      };
       this.$store.commit('setCurComponent', {
-        ...val,
+        component: newCurComponent,
+        index: this.curComponentIndex,
       });
+
+      const componentData = deepCopy(this.componentData);
+      componentData[this.curComponentIndex] = newCurComponent;
+      this.$store.commit('setComponentData', componentData);
     },
   },
 };
