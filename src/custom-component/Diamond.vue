@@ -42,6 +42,7 @@ export default {
   watch: {
     curComponent() {
       this.update();
+      this.draw();
     },
   },
   mounted() {
@@ -52,6 +53,9 @@ export default {
   methods: {
     draw() {
       const svg = document.getElementById(this.svgId);
+      while (svg.lastChild) {
+        svg.removeChild(svg.lastChild);
+      }
       const rc = rough.svg(svg);
       svg.appendChild(rc.polygon(
         [

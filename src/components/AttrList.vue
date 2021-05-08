@@ -1,38 +1,36 @@
 <template>
   <div class="attr-list">
     <el-form>
+      <!-- 样式 -->
       <el-form-item
-        v-for="(key, index) in styleKeys.filter((item) => item != 'rotate')"
-        :key="index"
+        v-for="(key) in styleKeys.filter((item) => item != 'rotate')"
+        :key="key"
         :label="map[key]"
       >
         <el-color-picker
-          v-if="key == 'borderColor'"
+          v-if="key == 'color'"
           v-model="editComponent.style[key]"
           @change="changeAttr($event,'style',key)"
         ></el-color-picker>
-        <el-color-picker
-          v-else-if="key == 'color'"
-          v-model="editComponent.style[key]"
-          @change="changeAttr($event,'style',key)"
-        ></el-color-picker>
-        <el-color-picker
-          v-else-if="key == 'backgroundColor'"
-          v-model="editComponent.style[key]"
-          @change="changeAttr($event,'style',key)"
-        ></el-color-picker>
-        <el-slider
-          v-else-if="key == 'roughness'"
-          v-model="editComponent.svgStyle[key]"
-          @change="changeAttr($event,'style',key)"
-        ></el-slider>
         <el-select
           v-else-if="key == 'textAlign'"
           v-model="editComponent.style[key]"
           @change="changeAttr($event,'style',key)"
         >
           <el-option
-            v-for="item in options"
+            v-for="item in textAlignOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+        <el-select
+          v-else-if="key == 'verticalAlign'"
+          v-model="editComponent.style[key]"
+          @change="changeAttr($event,'style',key)"
+        >
+          <el-option
+            v-for="item in verticalAlignOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -46,6 +44,45 @@
         v-else 
         v-model="editComponent.style[key]" />
       </el-form-item>
+
+      <!-- svg样式 -->
+      <el-form-item
+        v-for="(key) in svgStyleKeys"
+        :key="key"
+        :label="map[key]"
+      >
+        <el-color-picker
+          v-if="key == 'stroke'"
+          v-model="editComponent.svgStyle[key]"
+          @change="changeAttr($event,'svgStyle',key)"
+        ></el-color-picker>
+        <el-color-picker
+          v-else-if="key == 'fill'"
+          v-model="editComponent.svgStyle[key]"
+          @change="changeAttr($event,'svgStyle',key)"
+        ></el-color-picker>
+        <el-select
+          v-else-if="key == 'fillStyle'"
+          v-model="editComponent.svgStyle[key]"
+          @change="changeAttr($event,'svgStyle',key)"
+        >
+          <el-option
+            v-for="item in fillStyleOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+        <el-input 
+        type="number" 
+        @input="changeAttr($event,'svgStyle',key)" 
+        :step="key == 'curveFitting' ? 0.1 : 1"
+        :max="key == 'curveFitting' ? 1 : 800"
+        v-else 
+        v-model="editComponent.svgStyle[key]" />
+      </el-form-item>
+
+      <!-- 内容 -->
       <el-form-item
         label="内容"
         v-if="editComponent && !excludes.includes(editComponent.component)"
@@ -66,7 +103,7 @@ export default {
   data() {
     return {
       excludes: ['Picture', 'Group'], // 这些组件不显示内容
-      options: [
+      textAlignOptions: [
         {
           label: '左对齐',
           value: 'left',
@@ -80,13 +117,56 @@ export default {
           value: 'right',
         },
       ],
+      verticalAlignOptions: [
+        {
+          label: '上对齐',
+          value: 'top',
+        },
+        {
+          label: '居中',
+          value: 'middle',
+        },
+        {
+          label: '下对齐',
+          value: 'botttom',
+        },
+      ],
+      fillStyleOptions: [
+        {
+          label: '细线',
+          value: 'hachure',
+        },
+        {
+          label: '填充',
+          value: 'solid',
+        },
+        {
+          label: '之字线',
+          value: 'zigzag',
+        },
+        {
+          label: '交叉线',
+          value: 'cross-hatch',
+        },
+        {
+          label: '点',
+          value: 'dots',
+        },
+        {
+          label: '虚线',
+          value: 'dashed',
+        },
+        {
+          label: '曲折线',
+          value: 'zigzag-line',
+        },
+      ],
       map: {
         left: 'x 坐标',
         top: 'y 坐标',
         height: '高',
         width: '宽',
-        color: '颜色',
-        backgroundColor: '背景色',
+        color: '字体颜色',
         borderWidth: '边框宽度',
         borderColor: '边框颜色',
         borderRadius: '边框半径',
@@ -94,7 +174,8 @@ export default {
         fontWeight: '字体粗细',
         lineHeight: '行高',
         letterSpacing: '字间距',
-        textAlign: '对齐方式',
+        textAlign: '水平对齐方式',
+        verticalAlign: '垂直对齐方式',
         opacity: '透明度',
         roughness: '粗糙度',
         bowing: '线条弯曲',
@@ -102,7 +183,7 @@ export default {
         strokeWidth: '边框线条宽度',
         fill: '填充线条颜色',
         fillWeight: '填充线条宽度',
-        fillStyle: '填充线条样式',
+        fillStyle: '背景样式',
         hachureAngle: '填充线条角度',
         hachureGap: '填充线条间距',
         curveStepCount: '曲线程度',
@@ -119,7 +200,6 @@ export default {
           letterSpacing: 0,
           textAlign: 'center',
           color: '',
-          backgroundColor: '',
           verticalAlign: 'middle',
         },
         svgStyle: {
@@ -141,7 +221,12 @@ export default {
   computed: {
     styleKeys() {
       return this.$store.state.curComponent
-        ? Object.keys(this.$store.state.curComponent.style).concat(Object.keys(this.$store.state.curComponent.svgStyle))
+        ? Object.keys(this.$store.state.curComponent.style)
+        : [];
+    },
+    svgStyleKeys() {
+      return this.$store.state.curComponent
+        ? Object.keys(this.$store.state.curComponent.svgStyle)
         : [];
     },
     curComponent() {
