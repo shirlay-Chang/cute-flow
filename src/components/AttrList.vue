@@ -153,10 +153,6 @@ export default {
           value: 'dots',
         },
         {
-          label: '虚线',
-          value: 'dashed',
-        },
-        {
           label: '曲折线',
           value: 'zigzag-line',
         },

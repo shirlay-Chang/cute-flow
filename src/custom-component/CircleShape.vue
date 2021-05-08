@@ -1,5 +1,5 @@
 <template>
-  <div class="circle-shape">
+  <div :class="'circle-shape '+circleClass">
     <v-text :propValue="element.propValue" :element="element" />
     <svg 
     class="circle-svg" 
@@ -14,14 +14,18 @@
 import rough from 'roughjs/bundled/rough.esm.js';
 
 export default {
-  name: 'circle-shape',
+  name: 'circleShape',
   props: {
     element: {
       type: Object,
     },
+    componentId: {
+      type: Number,
+    },
   },
   data() {
     return {
+      circleClass: 'circle-shape'+new Date().getTime(),
       svgId: 'circle-svg'+new Date().getTime(),
       wrapperWidth: 200,
       wrapperHeight: 200,
@@ -34,10 +38,16 @@ export default {
         transformOrigin: 'left top',
       };
     },
+    curComponent() {
+      return this.$store.state.curComponent;
+    },
   },
   watch: {
-    element(val) {
-      console.log(val);
+    curComponent(newVal) {
+      if (this.componentId == this.$store.state.curComponentIndex) {
+        this.update();
+        this.draw();
+      }
     },
   },
   mounted() {
@@ -48,19 +58,22 @@ export default {
   methods: {
     draw() {
       const svg = document.getElementById(this.svgId);
+      while (svg.lastChild) {
+        svg.removeChild(svg.lastChild);
+      }
       const rc = rough.svg(svg);
-      svg.appendChild(rc.circle(
-        100, 100, 190,
-        {
-          stroke: 'black',
-          strokeWidth: 1,
-          // fill: 'rgba(0,0,255,0.2)',
-          // fillStyle: 'solid'
+      svg.appendChild(rc.ellipse(
+        this.wrapperWidth / 2,
+        this.wrapperHeight / 2,
+        this.wrapperWidth-10,
+        this.wrapperHeight-10, 
+        { 
+          ...this.element.svgStyle,
         },
       ));
     },
     update() {
-      const circle = document.getElementsByClassName('circle-shape')[0];
+      const circle = document.getElementsByClassName(this.circleClass)[0];
       this.wrapperWidth = circle.clientWidth;
       this.wrapperHeight = circle.clientHeight;
     },

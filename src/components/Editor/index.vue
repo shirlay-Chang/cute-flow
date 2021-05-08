@@ -31,6 +31,7 @@
         :style="getComponentStyle(item.style)"
         :propValue="item.propValue"
         :element="item"
+        :componentId="item.id"
         :id="'component' + item.id"
       />
 

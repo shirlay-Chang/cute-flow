@@ -19,6 +19,9 @@ export default {
     element: {
       type: Object,
     },
+    componentId: {
+      type: Number,
+    },
   },
   data() {
     return {
@@ -41,8 +44,10 @@ export default {
   },
   watch: {
     curComponent() {
-      this.update();
-      this.draw();
+      if (this.componentId == this.$store.state.curComponentIndex) {
+        this.update();
+        this.draw();
+      }
     },
   },
   mounted() {
