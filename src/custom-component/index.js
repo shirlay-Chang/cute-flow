@@ -9,6 +9,7 @@ const components = [
   'DiamondShape',
   'CircleShape',
   'ArrowShape',
+  'LineShape',
 ];
 
 components.forEach(key => {
