@@ -80,6 +80,10 @@ export default {
       background: url('../assets/iconfont/text.png') no-repeat top left;
       background-size: 100% 100%;
     }
+    .icon-arrow-r{
+      background: url('../assets/iconfont/arrow-r.png') no-repeat top left;
+      background-size: 100% 100%;
+    }
   }
 }
 </style>

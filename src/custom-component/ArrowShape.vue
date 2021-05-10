@@ -1,8 +1,8 @@
 <template>
-  <div :class="'diamond-shape '+diamondClass">
+  <div :class="'arrow-shape '+arrowClass">
     <v-text :propValue="element.propValue" :element="element" />
     <svg 
-    class="diamond-svg" 
+    class="arrow-svg" 
     :style="svgStyle"
     :id="svgId" 
     width="200" 
@@ -14,7 +14,7 @@
 import rough from 'roughjs/bundled/rough.esm.js';
 
 export default {
-  name: 'Diamond',
+  name: 'ArrowShape',
   props: {
     element: {
       type: Object,
@@ -25,8 +25,8 @@ export default {
   },
   data() {
     return {
-      diamondClass: 'diamond-shape'+new Date().getTime(),
-      svgId: 'diamond-svg'+new Date().getTime(),
+      arrowClass: 'arrow-shape'+new Date().getTime(),
+      svgId: 'arrow-svg'+new Date().getTime(),
       wrapperWidth: 200,
       wrapperHeight: 200,
     };
@@ -62,29 +62,28 @@ export default {
         svg.removeChild(svg.lastChild);
       }
       const rc = rough.svg(svg);
-      svg.appendChild(rc.polygon(
-        [
-          [100, 2],
-          [198, 100],
-          [100, 198],
-          [2, 100],
-        ],
-        {
-          ...this.element.svgStyle,
-        },
-      ));
+      svg.appendChild(rc.path(`M2 ${this.wrapperHeight/3} 
+      H ${this.wrapperWidth/2} 
+      L ${this.wrapperWidth/2} 0  
+      L ${this.wrapperWidth} ${this.wrapperHeight/2} 
+      L ${this.wrapperWidth/2} ${this.wrapperHeight} 
+      L ${this.wrapperWidth/2} ${2*this.wrapperHeight/3} 
+      L 2 ${2*this.wrapperHeight/3}  
+      L 2 ${this.wrapperHeight/3} `, { 
+        ...this.element.svgStyle,
+      }));
     },
     update() {
-      const diamond = document.getElementsByClassName(this.diamondClass)[0];
-      this.wrapperWidth = diamond.clientWidth;
-      this.wrapperHeight = diamond.clientHeight;
+      const arrow = document.getElementsByClassName(this.arrowClass)[0];
+      this.wrapperWidth = arrow.clientWidth;
+      this.wrapperHeight = arrow.clientHeight;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.diamond-shape {
+.arrow-shape {
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -93,7 +92,7 @@ export default {
     position: absolute;
     z-index: 1;
   }
-  .diamond-svg {
+  .arrow-svg {
     position: absolute;
     top: 0;
     left: 0;

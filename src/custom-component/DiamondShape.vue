@@ -1,8 +1,8 @@
 <template>
-  <div :class="'rect-shape '+rectClass">
+  <div :class="'diamond-shape '+diamondClass">
     <v-text :propValue="element.propValue" :element="element" />
     <svg 
-    class="rect-svg" 
+    class="diamond-svg" 
     :style="svgStyle"
     :id="svgId" 
     width="200" 
@@ -14,7 +14,7 @@
 import rough from 'roughjs/bundled/rough.esm.js';
 
 export default {
-  name: 'RectShape',
+  name: 'DiamondShape',
   props: {
     element: {
       type: Object,
@@ -25,8 +25,8 @@ export default {
   },
   data() {
     return {
-      rectClass: 'rect-shape'+new Date().getTime(),
-      svgId: 'rect-svg'+new Date().getTime(),
+      diamondClass: 'diamond-shape'+new Date().getTime(),
+      svgId: 'diamond-svg'+new Date().getTime(),
       wrapperWidth: 200,
       wrapperHeight: 200,
     };
@@ -62,21 +62,29 @@ export default {
         svg.removeChild(svg.lastChild);
       }
       const rc = rough.svg(svg);
-      svg.appendChild(rc.rectangle(2, 2, this.wrapperWidth-4, this.wrapperHeight-4, { 
-        ...this.element.svgStyle,
-      }));
+      svg.appendChild(rc.polygon(
+        [
+          [100, 2],
+          [198, 100],
+          [100, 198],
+          [2, 100],
+        ],
+        {
+          ...this.element.svgStyle,
+        },
+      ));
     },
     update() {
-      const rect = document.getElementsByClassName(this.rectClass)[0];
-      this.wrapperWidth = rect.clientWidth;
-      this.wrapperHeight = rect.clientHeight;
+      const diamond = document.getElementsByClassName(this.diamondClass)[0];
+      this.wrapperWidth = diamond.clientWidth;
+      this.wrapperHeight = diamond.clientHeight;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.rect-shape {
+.diamond-shape {
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -85,7 +93,7 @@ export default {
     position: absolute;
     z-index: 1;
   }
-  .rect-svg {
+  .diamond-svg {
     position: absolute;
     top: 0;
     left: 0;

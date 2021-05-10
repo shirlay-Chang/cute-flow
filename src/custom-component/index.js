@@ -6,8 +6,9 @@ const components = [
   'VButton',
   'Group',
   'RectShape',
-  'Diamond',
+  'DiamondShape',
   'CircleShape',
+  'ArrowShape',
 ];
 
 components.forEach(key => {
