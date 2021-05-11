@@ -38,7 +38,7 @@
       </div>
       <div class="canvas-config">
         <span>画布比例</span>
-        <input v-model="scale" @input="handleScaleChange" /> %
+        <input v-model="scale" @input="handleScaleChange" type="number" max="100" /> %
       </div>
     </div>
 

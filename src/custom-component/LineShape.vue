@@ -5,8 +5,8 @@
     class="line-svg" 
     :style="svgStyle"
     :id="svgId" 
-    width="200" 
-    height="20"></svg>
+    :width="wrapperWidth" 
+    :height="wrapperHeight"></svg>
   </div>
 </template>
 
@@ -34,8 +34,8 @@ export default {
   computed: {
     svgStyle() {
       return {
-        transform: `scale(${(this.wrapperWidth / 200).toFixed(2)}, ${(this.wrapperHeight / 20).toFixed(2)})`,
-        transformOrigin: 'left top',
+        // transform: `scale(${(this.wrapperWidth / 200).toFixed(2)}, ${(this.wrapperHeight / 20).toFixed(2)})`,
+        // transformOrigin: 'left top',
       };
     },
     curComponent() {

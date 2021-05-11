@@ -5,8 +5,8 @@
     class="diamond-svg" 
     :style="svgStyle"
     :id="svgId" 
-    width="200" 
-    height="200"></svg>
+    :width="wrapperWidth" 
+    :height="wrapperHeight"></svg>
   </div>
 </template>
 
@@ -34,8 +34,8 @@ export default {
   computed: {
     svgStyle() {
       return {
-        transform: `scale(${(this.wrapperWidth / 200).toFixed(2)}, ${(this.wrapperHeight / 200).toFixed(2)})`,
-        transformOrigin: 'left top',
+        // transform: `scale(${(this.wrapperWidth / 200).toFixed(2)}, ${(this.wrapperHeight / 200).toFixed(2)})`,
+        // transformOrigin: 'left top',
       };
     },
     curComponent() {
@@ -45,8 +45,8 @@ export default {
   watch: {
     curComponent() {
       if (this.componentId == this.$store.state.curComponentIndex) {
-        this.update();
         this.draw();
+        this.update();
       }
     },
   },
@@ -64,10 +64,10 @@ export default {
       const rc = rough.svg(svg);
       svg.appendChild(rc.polygon(
         [
-          [100, 2],
-          [198, 100],
-          [100, 198],
-          [2, 100],
+          [this.wrapperWidth/2, 2],
+          [this.wrapperWidth-2, this.wrapperHeight/2],
+          [this.wrapperWidth/2, this.wrapperHeight-2],
+          [2, this.wrapperHeight/2],
         ],
         {
           ...this.element.svgStyle,
