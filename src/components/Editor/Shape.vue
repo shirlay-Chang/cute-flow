@@ -317,7 +317,6 @@ export default {
           isFirst = false;
           return;
         }
-        // this.$slots.default[0].componentInstance.update();
 
         needSave = true;
         const curPositon = {

@@ -47,3 +47,6 @@ li {
 .el-form-item__label{
   float: none;
 }
+.el-input__inner[type="number"]{
+  padding:0 0 0 15px;
+}

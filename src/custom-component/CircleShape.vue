@@ -12,6 +12,7 @@
 
 <script>
 import rough from 'roughjs/bundled/rough.esm.js';
+import { mapState } from 'vuex';
 
 export default {
   name: 'circleShape',
@@ -31,23 +32,20 @@ export default {
       wrapperHeight: 200,
     };
   },
-  computed: {
-    svgStyle() {
-      return {
-        // transform: `scale(${(this.wrapperWidth / 200).toFixed(2)}, ${(this.wrapperHeight / 200).toFixed(2)})`,
-        // transformOrigin: 'left top',
-      };
-    },
-    curComponent() {
-      return this.$store.state.curComponent;
-    },
-  },
+  computed: mapState([
+    'curComponent',
+    'canvasStyleData',
+  ]),
   watch: {
     curComponent(newVal) {
       if (this.componentId == this.$store.state.curComponentIndex) {
         this.update();
         this.draw();
       }
+    },
+    canvasStyleData() {
+      this.draw();
+      this.update();
     },
   },
   mounted() {
