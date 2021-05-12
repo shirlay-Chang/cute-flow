@@ -1,6 +1,6 @@
 <template>
     <div style="overflow: hidden">
-        <img :src="propValue">
+        <img :src="imgUrl">
     </div>
 </template>
 
@@ -10,6 +10,11 @@ export default {
     propValue: {
       type: String,
       require: true,
+    },
+  },
+  computed: {
+    imgUrl() {
+      return this.propValue;
     },
   },
 };

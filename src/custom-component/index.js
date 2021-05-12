@@ -10,6 +10,7 @@ const components = [
   'CircleShape',
   'ArrowShape',
   'LineShape',
+  'RoundedRectShape',
 ];
 
 components.forEach(key => {

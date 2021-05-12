@@ -1,8 +1,8 @@
 <template>
-  <div :class="'arrow-shape '+arrowClass">
+  <div :class="'roundedrect-shape '+roundedrectClass">
     <v-text :propValue="element.propValue" :element="element" />
     <svg 
-    class="arrow-svg" 
+    class="roundedrect-svg" 
     :id="svgId" 
     :width="wrapperWidth" 
     :height="wrapperHeight"></svg>
@@ -14,7 +14,7 @@ import rough from 'roughjs/bundled/rough.esm.js';
 import { mapState } from 'vuex';
 
 export default {
-  name: 'ArrowShape',
+  name: 'RoundedrectShape',
   props: {
     element: {
       type: Object,
@@ -25,8 +25,8 @@ export default {
   },
   data() {
     return {
-      arrowClass: 'arrow-shape'+new Date().getTime(),
-      svgId: 'arrow-svg'+new Date().getTime(),
+      roundedrectClass: 'roundedrect-shape'+new Date().getTime(),
+      svgId: 'roundedrect-svg'+new Date().getTime(),
       wrapperWidth: 200,
       wrapperHeight: 200,
     };
@@ -59,28 +59,24 @@ export default {
         svg.removeChild(svg.lastChild);
       }
       const rc = rough.svg(svg);
-      svg.appendChild(rc.path(`M2 ${this.wrapperHeight/3} 
-      H ${this.wrapperWidth/2} 
-      L ${this.wrapperWidth/2} 0  
-      L ${this.wrapperWidth} ${this.wrapperHeight/2} 
-      L ${this.wrapperWidth/2} ${this.wrapperHeight} 
-      L ${this.wrapperWidth/2} ${2*this.wrapperHeight/3} 
-      L 2 ${2*this.wrapperHeight/3}  
-      L 2 ${this.wrapperHeight/3} `, { 
+      svg.appendChild(rc.arc(10, 200, 200, 180, Math.PI, Math.PI * 1.6, false, { 
         ...this.element.svgStyle,
       }));
+      // svg.appendChild(rc.rectangle(2, 2, this.wrapperWidth-4, this.wrapperHeight-4, { 
+      //   ...this.element.svgStyle,
+      // }));
     },
     update() {
-      const arrow = document.getElementsByClassName(this.arrowClass)[0];
-      this.wrapperWidth = arrow.clientWidth;
-      this.wrapperHeight = arrow.clientHeight;
+      const roundedrect = document.getElementsByClassName(this.roundedrectClass)[0];
+      this.wrapperWidth = roundedrect.clientWidth;
+      this.wrapperHeight = roundedrect.clientHeight;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.arrow-shape {
+.roundedrect-shape {
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -89,7 +85,7 @@ export default {
     position: absolute;
     z-index: 1;
   }
-  .arrow-svg {
+  .roundedrect-svg {
     position: absolute;
     top: 0;
     left: 0;

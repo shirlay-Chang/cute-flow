@@ -82,16 +82,27 @@
         v-model="editComponent.svgStyle[key]" />
       </el-form-item>
 
-      <!-- 内容 -->
+      <!-- 文本内容 -->
       <el-form-item
         label="内容"
-        v-if="editComponent && !excludes.includes(editComponent.component)"
+        v-if="editComponent && editComponent.component!='Group' && editComponent.component!='Picture'"
       >
         <el-input 
         type="textarea" 
         @input="changeAttr($event,'propValue')" 
         v-model="editComponent.propValue" />
       </el-form-item>
+
+      <!-- 图片内容 -->
+      <el-form-item
+        label="图片"
+        v-else
+      >
+        <el-input 
+        type="file" 
+        @input="changeAttr($event,'propValue')" />
+      </el-form-item>
+
     </el-form>
   </div>
 </template>
@@ -102,7 +113,6 @@ import { deepCopy } from '@/utils/utils';
 export default {
   data() {
     return {
-      excludes: ['Picture', 'Group'], // 这些组件不显示内容
       textAlignOptions: [
         {
           label: '左对齐',

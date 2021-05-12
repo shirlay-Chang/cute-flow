@@ -3,7 +3,6 @@
     <v-text :propValue="element.propValue" :element="element" />
     <svg 
     class="line-svg" 
-    :style="svgStyle"
     :id="svgId" 
     :width="wrapperWidth" 
     :height="wrapperHeight"></svg>

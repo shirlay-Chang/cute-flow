@@ -3,7 +3,6 @@
     <v-text :propValue="element.propValue" :element="element" />
     <svg 
     class="diamond-svg" 
-    :style="svgStyle"
     :id="svgId" 
     :width="wrapperWidth" 
     :height="wrapperHeight"></svg>

@@ -8,7 +8,7 @@
       :data-index="index"
     >
       <span class="iconfont" :class="'icon-' + item.icon"></span>
-      <span>{{ item.label }}</span>
+      <!-- <span>{{ item.label }}</span> -->
     </div>
   </div>
 </template>
@@ -35,14 +35,12 @@ export default {
 .component-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 10px;
 
   .list {
     width: 45%;
-    border: 1px solid #ddd;
     cursor: grab;
-    margin-bottom: 10px;
     text-align: center;
     color: #74b3e9;
     padding: 2px 5px;
@@ -56,8 +54,8 @@ export default {
 
     .iconfont {
       margin-right: 4px;
-      width: 25px;
-      height: 25px;
+      width: 50px;
+      height: 50px;
     }
 
     .icon-diamond{
