@@ -1,8 +1,9 @@
 <template>
   <div class="bg" v-if="show">
+    <el-button @click="save" class="save">保存</el-button>
     <el-button @click="close" class="close">关闭</el-button>
     <div class="canvas-container">
-      <div class="canvas">
+      <div class="canvas" id="previewCanvas">
         <component
           v-for="(item, index) in componentData"
           :key="item.id"
@@ -22,6 +23,7 @@
 import { getStyle } from '@/utils/style';
 import { mapState } from 'vuex';
 import { changeStyleWithScale } from '@/utils/translate';
+import html2canvas from 'html2canvas';
 
 export default {
   model: {
@@ -37,6 +39,8 @@ export default {
   components: { 
   },
   computed: mapState(['componentData', 'canvasStyleData']),
+  watch: {
+  },
   methods: {
     changeStyleWithScale,
 
@@ -44,6 +48,15 @@ export default {
 
     close() {
       this.$emit('change', false);
+    },
+
+    save() {
+      html2canvas(document.getElementById('previewCanvas')).then((canvas) => {
+        const a = document.createElement('a');
+        a.href = canvas.toDataURL();
+        a.download = new Date().getTime()+'.png';
+        a.click();
+      });
     },
   },
 };
@@ -74,6 +87,12 @@ export default {
       height: 100%;
       overflow: auto;
     }
+  }
+
+  .save{
+    position: absolute;
+    right: 100px;
+    top: 20px;
   }
 
   .close {
