@@ -1,34 +1,27 @@
 <template>
   <div class="bg" v-if="show">
-    <el-button @click="save" class="save">保存</el-button>
+    <el-button @click="save" class="save">保存图片</el-button>
     <el-button @click="close" class="close">关闭</el-button>
-    <div class="canvas-container">
-      <div class="canvas" id="previewCanvas">
-        <component
-          v-for="(item, index) in componentData"
-          :key="item.id"
-          :index="index"
-          class="component"
-          :is="item.component"
-          :style="getStyle(item.style)"
-          :propValue="item.propValue"
-          :element="item"
-        />
-      </div>
+    <div class="img-container">
+      <img :src="imgUrl"/>
     </div>
   </div>
 </template>
 
 <script>
-import { getStyle } from '@/utils/style';
 import { mapState } from 'vuex';
-import { changeStyleWithScale } from '@/utils/translate';
 import html2canvas from 'html2canvas';
 
 export default {
   model: {
     prop: 'show',
     event: 'change',
+  },
+  data() {
+    return {
+      canvas: '',
+      imgUrl: '',
+    };
   },
   props: {
     show: {
@@ -40,23 +33,28 @@ export default {
   },
   computed: mapState(['componentData', 'canvasStyleData']),
   watch: {
+    show(val) {
+      if (val) {
+        document.getElementsByClassName('grid')[0].style.display = 'none';
+        html2canvas(document.getElementById('editor')).then((canvas) => {
+          this.canvas = canvas;
+          this.imgUrl = canvas.toDataURL();
+        });
+      } else {
+        document.getElementsByClassName('grid')[0].style.display = 'block';
+      }
+    },
   },
   methods: {
-    changeStyleWithScale,
-
-    getStyle,
-
     close() {
       this.$emit('change', false);
     },
 
     save() {
-      html2canvas(document.getElementById('previewCanvas')).then((canvas) => {
-        const a = document.createElement('a');
-        a.href = canvas.toDataURL();
-        a.download = new Date().getTime()+'.png';
-        a.click();
-      });
+      const a = document.createElement('a');
+      a.href = this.canvas.toDataURL();
+      a.download = new Date().getTime()+'.png';
+      a.click();
     },
   },
 };
@@ -76,16 +74,14 @@ export default {
   justify-content: center;
   overflow: auto;
 
-  .canvas-container {
+  .img-container {
+    background: #fff;
     width: calc(100% - 30px);
     height: calc(100% - 120px);
-    .canvas {
-      background: #fff;
-      position: relative;
-      margin: auto;
-      width: 100%;
+    img {
+      display: block;
       height: 100%;
-      overflow: auto;
+      margin:0 auto;
     }
   }
 

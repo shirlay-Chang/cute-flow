@@ -7,7 +7,7 @@
       <label for="input" class="insert">插入图片</label>
       <input type="file" @change="handleFileChange" id="input" hidden />
       <el-button @click="preview" style="margin-left: 10px">预览</el-button>
-      <el-button @click="save">保存</el-button>
+      <el-button @click="save">保存画布</el-button>
       <el-button @click="clearCanvas">清空画布</el-button>
       <el-button @click="compose" :disabled="!areaData.components.length"
         >组合</el-button
