@@ -82,6 +82,11 @@ export default {
       background: url('../assets/iconfont/arrow-r.png') no-repeat top left;
       background-size: 100% 100%;
     }
+    .icon-arrow-l{
+      background: url('../assets/iconfont/arrow-r.png') no-repeat top left;
+      background-size: 100% 100%;
+      transform: rotate(-180deg);
+    }
     .icon-line{
       background: url('../assets/iconfont/line.png') no-repeat top left;
       background-size: 100% 100%;

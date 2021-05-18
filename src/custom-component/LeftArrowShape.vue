@@ -14,7 +14,7 @@ import rough from 'roughjs/bundled/rough.esm.js';
 import { mapState } from 'vuex';
 
 export default {
-  name: 'ArrowShape',
+  name: 'leftArrowShape',
   props: {
     element: {
       type: Object,
@@ -59,14 +59,14 @@ export default {
         svg.removeChild(svg.lastChild);
       }
       const rc = rough.svg(svg);
-      svg.appendChild(rc.path(`M2 ${this.wrapperHeight/3} 
-      H ${this.wrapperWidth/2} 
+      svg.appendChild(rc.path(`M${this.wrapperWidth-2} ${this.wrapperHeight/3} 
+      L ${this.wrapperWidth/2} ${this.wrapperHeight/3} 
       L ${this.wrapperWidth/2} 0  
-      L ${this.wrapperWidth} ${this.wrapperHeight/2} 
+      L 0 ${this.wrapperHeight/2} 
       L ${this.wrapperWidth/2} ${this.wrapperHeight} 
       L ${this.wrapperWidth/2} ${2*this.wrapperHeight/3} 
-      L 2 ${2*this.wrapperHeight/3}  
-      L 2 ${this.wrapperHeight/3} `, { 
+      L ${this.wrapperWidth-2} ${2*this.wrapperHeight/3}  
+      L ${this.wrapperWidth-2} ${this.wrapperHeight/3} `, { 
         ...this.element.svgStyle,
       }));
     },

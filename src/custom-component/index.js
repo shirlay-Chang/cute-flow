@@ -8,7 +8,8 @@ const components = [
   'RectShape',
   'DiamondShape',
   'CircleShape',
-  'ArrowShape',
+  'RightArrowShape',
+  'LeftArrowShape',
   'LineShape',
   'RoundedRectShape',
 ];
