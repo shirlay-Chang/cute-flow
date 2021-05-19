@@ -7,6 +7,7 @@ const components = [
   'Group',
   'RectShape',
   'DiamondShape',
+  'PolygonShape',
   'CircleShape',
   'RightArrowShape',
   'LeftArrowShape',

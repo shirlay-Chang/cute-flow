@@ -91,6 +91,10 @@ export default {
       background: url('../assets/iconfont/line.png') no-repeat top left;
       background-size: 100% 100%;
     }
+    .icon-polygon{
+      background: url('../assets/iconfont/polygon.png') no-repeat top left;
+      background-size: 100% 90%;
+    }
   }
 }
 </style>
