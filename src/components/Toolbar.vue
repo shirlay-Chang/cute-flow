@@ -171,11 +171,12 @@ export default {
               propValue: fileResult,
               style: {
                 ...commonStyle,
-                top: 0,
-                left: 0,
+                top: 100,
+                left: 100,
                 width: scaleImage ? img.width / 3 : img.width,
                 height: scaleImage ? img.height / 3 : img.height,
               },
+              svgStyle: {},
             },
           });
 
@@ -189,8 +190,11 @@ export default {
     },
 
     preview() {
-      this.isShowPreview = true;
-      this.$store.commit('setEditMode', 'preview');
+      this.$store.commit('setCurComponent', { component: null, index: null });
+      setTimeout(() => {
+        this.isShowPreview = true;
+        this.$store.commit('setEditMode', 'preview');
+      }, 0);
     },
 
     save() {

@@ -98,9 +98,10 @@
         label="图片"
         v-else
       >
-        <el-input 
+        <input 
         type="file" 
-        @input="changeAttr($event,'propValue')" />
+        @change="handleFileChange" 
+        id="input" />
       </el-form-item>
 
     </el-form>
@@ -109,6 +110,7 @@
 
 <script>
 import { deepCopy } from '@/utils/utils';
+import toast from '@/utils/toast';
 
 export default {
   data() {
@@ -272,6 +274,48 @@ export default {
       const componentData = deepCopy(this.componentData);
       componentData[this.curComponentIndex] = newCurComponent;
       this.$store.commit('setComponentData', componentData);
+    },
+    handleFileChange(e) {
+      console.log(e);
+      const file = e.target.files[0];
+      if (!file.type.includes('image')) {
+        toast('只能插入图片');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (res) => {
+        const fileResult = res.target.result;
+        const img = new Image();
+        img.onload = () => {
+          // let scaleImage = img.width > 400;
+          this.changeAttr(fileResult, 'propValue');
+
+          // this.$store.commit('addComponent', {
+          //   component: {
+          //     ...commonAttr,
+          //     id: generateID(),
+          //     component: 'Picture',
+          //     label: '图片',
+          //     icon: '',
+          //     propValue: fileResult,
+          //     style: {
+          //       ...commonStyle,
+          //       top: 0,
+          //       left: 0,
+          //       width: scaleImage ? img.width / 3 : img.width,
+          //       height: scaleImage ? img.height / 3 : img.height,
+          //     },
+          //     svgStyle: {},
+          //   },
+          // });
+          // this.$store.commit('recordSnapshot');
+        };
+
+        img.src = fileResult;
+      };
+
+      reader.readAsDataURL(file);
     },
   },
 };

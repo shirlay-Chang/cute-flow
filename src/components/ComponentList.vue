@@ -60,7 +60,7 @@ export default {
 
     .icon-diamond{
       background: url('../assets/iconfont/diamond.png') no-repeat top left;
-      background-size: 100% 100%;
+      background-size: 105% 105%;
     }
     .icon-circle{
       background: url('../assets/iconfont/circle.png') no-repeat top left;

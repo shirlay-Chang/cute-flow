@@ -1,5 +1,6 @@
 <template>
     <div style="overflow: hidden">
+      <div></div>
         <img :src="imgUrl">
     </div>
 </template>

@@ -50,7 +50,7 @@ const list = [
   //   icon: 'picture',
   //   propValue: '',
   //   style: {
-  //     width: 300,
+  //     width: 200,
   //     height: 200,
   //     borderRadius: '',
   //     opacity: 1,
