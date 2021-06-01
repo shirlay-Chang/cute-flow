@@ -38,13 +38,11 @@ export default {
   watch: {
     curComponent() {
       if (this.componentId == this.$store.state.curComponentIndex) {
-        console.log(1);
         this.update();
         this.draw();
       }
     },
     canvasStyleData() {
-      console.log(2);
       this.draw();
       this.update();
     },
